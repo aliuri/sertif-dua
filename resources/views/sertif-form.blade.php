@@ -21,6 +21,12 @@
               <label class="form-check-label " id="page_2" for="flexSwitchCheckDefault">Page 2</label>
             </div>
           </div>
+          <div class="mb-3">
+            <div class="form-check form-switch">
+              <input class="form-check-input rata_kiri" type="checkbox" name="rata_huruf" value="left" id="rata_huruf">
+              <label class="form-check-label " id="rata_huruf" for="flexSwitchCheckDefault">Rata kiri</label>
+            </div>
+          </div>
           <label class="form-label">Sesuaikan Nama (mm)</label>
           <div class="row">
               <div class="col">

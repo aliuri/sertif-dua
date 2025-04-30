@@ -62,6 +62,7 @@ class TestControllers extends Controller
         $atas = $get_sertif->margin_top.'mm';
         $kanan = $get_sertif->margin_right.'mm';
         $kiri = $get_sertif->margin_left.'mm';
+        $rataHuruf = !empty($get_sertif->rata_huruf) ? $get_sertif->rata_huruf : 'center';
         //Partisipan
         $sertif_2 = $get_sertif_page_2->file;
         $atas_2 = $get_sertif->peserta_top.'mm';
@@ -69,8 +70,8 @@ class TestControllers extends Controller
         $kiri_2 = $get_sertif->peserta_left.'mm';
 
         $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => [297, 210]]);
-        $data = "<div style='color:#323330;font-size:40px;text-align:center;padding-top: $atas;margin-left: $kiri;margin-right: $kanan;'> $peserta </div>
-                <div style='color:#323330;font-size:30px;text-align:center;padding-top: $atas_2;margin-left: $kiri_2;margin-right: $kanan_2;'> $partisipan </div>";
+        $data = "<div style='color:#323330;font-size:40px;text-align:$rataHuruf;padding-top: $atas;margin-left: $kiri;margin-right: $kanan;'> $peserta </div>
+                <div style='color:#323330;font-size:30px;text-align:$rataHuruf;padding-top: $atas_2;margin-left: $kiri_2;margin-right: $kanan_2;'> $partisipan </div>";
         $mpdf->WriteHtml('<div style="position: absolute; left:0; right: 0; top: 0; bottom: 0;">
                         <img src="'.public_path().'/'.'uploads/'.$sertif.'" 
                             style="margin: 0;" />
@@ -125,6 +126,7 @@ class TestControllers extends Controller
                 [
                     'file' => $nama_file,
                     'page_two' => $request->page_2,
+                    'rata_huruf' => $request->rata_huruf,
                     'margin_top' => $request->margin_top,
                     'margin_left' => $request->margin_left,
                     'margin_right' => $request->margin_right,
