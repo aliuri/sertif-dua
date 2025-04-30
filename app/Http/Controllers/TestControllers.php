@@ -63,14 +63,14 @@ class TestControllers extends Controller
         $kanan = $get_sertif->margin_right.'mm';
         $kiri = $get_sertif->margin_left.'mm';
         $rataHuruf = !empty($get_sertif->rata_huruf) ? $get_sertif->rata_huruf : 'center';
-        $sizeNama = !empty($get_sertif->size_nama) ? $get_sertif->size_nama.'px' : '40px';
+        $sizeNama = !empty($get_sertif->size_nama) ? $get_sertif->size_nama.'px' : '32px';
         // dd($get_sertif->rata_huruf);
         //Partisipan
         $sertif_2 = $get_sertif_page_2->file;
         $atas_2 = $get_sertif->peserta_top.'mm';
         $kanan_2 = $get_sertif->peserta_right.'mm';
         $kiri_2 = $get_sertif->peserta_left.'mm';
-        $sizePeserta = !empty($get_sertif->size_peserta) ? $get_sertif->size_peserta.'px' : '30px';
+        $sizePeserta = !empty($get_sertif->size_peserta) ? $get_sertif->size_peserta.'px' : '22px';
 
         $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => [297, 210]]);
         $data = "<div style='color:#323330;font-size:$sizeNama;text-align:$rataHuruf;padding-top: $atas;margin-left: $kiri;margin-right: $kanan;'> $peserta </div>
