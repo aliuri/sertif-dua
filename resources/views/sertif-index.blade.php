@@ -89,6 +89,8 @@
           $('#peserta_top').val(data.peserta_top);
           $('#peserta_right').val(data.peserta_right);
           $('#peserta_left').val(data.peserta_left);
+          $('#size_nama').val(data.size_nama);
+          $('#size_peserta').val(data.size_peserta);
           $('#file_edit').val(data.file);
 
           if ((data.page_two !== 0) & (data.page_two !== null)) {
@@ -98,7 +100,14 @@
             }else{
                 $(".page_2").prop("checked", false);
             }
-
+          
+          if ((data.rata_huruf!== 0) & (data.rata_huruf!== null)) {
+              console.log(data.rata_huruf);
+              console.log("checked");
+              $(".rata_kiri").prop("checked", true);
+            }else{
+                $(".rata_kiri").prop("checked", false);
+            }
           document.getElementById('file_upload').style.display = 'none';
 
       })
