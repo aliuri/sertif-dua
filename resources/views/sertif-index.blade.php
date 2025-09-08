@@ -100,6 +100,7 @@
             }
 
           document.getElementById('file_upload').style.display = 'none';
+          document.getElementById('excel_upload').style.display = 'none';
 
       })
    });
