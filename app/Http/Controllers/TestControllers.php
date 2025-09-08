@@ -122,8 +122,9 @@ class TestControllers extends Controller
         $filename = str_replace([' ', '/', '\\', ':', '*', '?', '"', '<', '>', '|'], '_', $peserta);
         $filename = preg_replace('/[^A-Za-z0-9\_\-]/', '', $filename); // Hapus karakter khusus
         $filename = strtolower($filename) . '_sertifikat.pdf';
-        
-        return $mpdf->Output($peserta . '.pdf', 'I');
+
+        // Ganti baris terakhir dengan nama file yang sudah diformat
+        return $mpdf->Output($filename, 'I');
     }
 
     public function index(Request $request)
