@@ -89,8 +89,6 @@
           $('#peserta_top').val(data.peserta_top);
           $('#peserta_right').val(data.peserta_right);
           $('#peserta_left').val(data.peserta_left);
-          $('#size_nama').val(data.size_nama);
-          $('#size_peserta').val(data.size_peserta);
           $('#file_edit').val(data.file);
 
           if ((data.page_two !== 0) & (data.page_two !== null)) {
@@ -100,14 +98,7 @@
             }else{
                 $(".page_2").prop("checked", false);
             }
-          
-          if ((data.rata_huruf!== 0) & (data.rata_huruf!== null)) {
-              console.log(data.rata_huruf);
-              console.log("checked");
-              $(".rata_kiri").prop("checked", true);
-            }else{
-                $(".rata_kiri").prop("checked", false);
-            }
+
           document.getElementById('file_upload').style.display = 'none';
 
       })
@@ -147,5 +138,37 @@
     });
 
     });
+
+    // Add this to your JavaScript file
+$(document).ready(function() {
+    $('#excelFile').change(function() {
+        const file = this.files[0];
+        const fileType = file.type;
+        const maxSize = 5242880; // 5MB
+        
+        // Reset error message
+        $('#excelError').html('');
+        
+        // Validate file type
+        const validTypes = [
+            'application/vnd.ms-excel',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'text/csv'
+        ];
+        
+        if (!validTypes.includes(fileType)) {
+            $('#excelError').html('Please upload a valid Excel file (.xlsx, .xls, or .csv)');
+            this.value = '';
+            return;
+        }
+        
+        // Validate file size
+        if (file.size > maxSize) {
+            $('#excelError').html('File size should not exceed 5MB');
+            this.value = '';
+            return;
+        }
+    });
+});
 </script>
 </html>

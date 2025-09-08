@@ -10,6 +10,8 @@ use App\sertifs;
 use App\Pesertas;
 use Redirect;
 use Mpdf\Mpdf;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\PesertasImport;
 
 class TestControllers extends Controller
 {
@@ -66,7 +68,7 @@ class TestControllers extends Controller
         $sizeNama = !empty($get_sertif->size_nama) ? $get_sertif->size_nama.'px' : '32px';
         // dd($get_sertif->rata_huruf);
         //Partisipan
-        $sertif_2 = $get_sertif_page_2->file;
+        $sertif_2 = $get_sertif_page_2->file ?? null;;
         $atas_2 = $get_sertif->peserta_top.'mm';
         $kanan_2 = $get_sertif->peserta_right.'mm';
         $kiri_2 = $get_sertif->peserta_left.'mm';
@@ -93,7 +95,7 @@ class TestControllers extends Controller
     public function index(Request $request)
     {   
         if ($request->ajax()) {
-                $data = DB::table("sertifs")->get();
+            $data = DB::table("sertifs")->orderBy('id', 'desc')->get();
                 // dd($data);
                 return Datatables::of($data)
                         ->addIndexColumn()
@@ -116,16 +118,24 @@ class TestControllers extends Controller
     public function store(Request $request)
     {
         // dd($request->file);
-        $file = $request->file('file');  
-        if(!empty($file)){
-            $name = $file->getClientOriginalName();
-            $nama_file = time()."_".$file->getClientOriginalName();
-            $request->file->storeAs('uploads', $nama_file, ['disk' => 'root']);
-        } else {
-            $nama_file = $request->file_edit;
-        }
-        // dd($request);
-        sertifs::updateOrCreate(['id' => $request->sertif_id],
+        $file = $request->file('file');
+
+
+        $request->validate([
+            'excel_file' => 'required|mimes:xlsx,xls,csv|max:5120',
+        ]);
+
+        try {
+            if (!empty($file)) {
+                $name = $file->getClientOriginalName();
+                $nama_file = time() . "_" . $file->getClientOriginalName();
+                $request->file->storeAs('uploads', $nama_file, ['disk' => 'root']);
+            } else {
+                $nama_file = $request->file_edit;
+            }
+            // dd($request);
+            $sertifikat = sertifs::updateOrCreate(
+                ['id' => $request->sertif_id],
                 [
                     'file' => $nama_file,
                     'page_two' => $request->page_2,
@@ -136,10 +146,30 @@ class TestControllers extends Controller
                     'peserta_top' => $request->peserta_top,
                     'peserta_left' => $request->peserta_left,
                     'peserta_right' => $request->peserta_right,
-                    'size_nama' => $request->size_nama,
-                    'size_peserta' => $request->size_peserta,
-                ]);
-        return response()->json(['success'=>'Sertif '.$nama_file.' berhasil di upload.']);
+                ]
+            );
+
+            if ($request->hasFile('excel_file')) {
+                // Create new import instance with sertif_id
+                $import = new PesertasImport($sertifikat->id);
+
+                // Import data using Excel facade
+                Excel::import($import, $request->file('excel_file'));
+
+                return response()->json(['success' => 'Sertif ' . $nama_file . ' berhasil di upload.']);
+            }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'File tidak ditemukan'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error: ' . $e->getMessage()
+            ]);
+        }
+        return response()->json(['success' => 'Sertif ' . $nama_file . ' berhasil di upload.']);
         // return Redirect::back();
     }
 

@@ -15,6 +15,14 @@
             <input class="form-control form-control-sm" id="formFileSm" name="file" type="file">
             <div class="alert-message alert-warning" id="fileError"></div>
           </div>
+          <!-- Excel Upload Section -->
+          <div class="mb-3" id="excel_upload">
+            <label for="excelFile" class="form-label">Upload Data Excel</label>
+            <input class="form-control form-control-sm" id="excelFile" name="excel_file" type="file" accept=".xlsx,.xls,.csv">
+            <div class="form-text">Format yang didukung: .xlsx, .xls, .csv</div>
+            <div class="alert-message alert-warning" id="excelError"></div>
+          </div>
+          {{-- end upload code --}}
           <div class="mb-3">
             <div class="form-check form-switch">
               <input class="form-check-input page_2" type="checkbox" name="page_2" value="1" id="page_2">
@@ -27,18 +35,6 @@
               <label class="form-check-label " id="rata_huruf" for="flexSwitchCheckDefault">Rata kiri</label>
             </div>
           </div>
-          <label class="form-label">Sesuaikan Ukuran Font (px)</label>
-          <div class="row">
-              <div class="col">
-                <label for="size_nama" name="size_nama" class="form-label"><b>Nama</b></label>
-                <input class="form-control form-control-sm" id="size_nama" name="size_nama" type="number">
-              </div>
-              <div class="col">
-                <label for="size_peserta" name="size_peserta" class="form-label"><b>Peserta</b></label>
-                <input class="form-control form-control-sm" id="size_peserta" name="size_peserta" type="number">
-              </div>
-          </div>
-          <br>
           <label class="form-label">Sesuaikan Nama (mm)</label>
           <div class="row">
               <div class="col">
