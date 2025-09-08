@@ -68,7 +68,7 @@ class TestControllers extends Controller
         $sizeNama = !empty($get_sertif->size_nama) ? $get_sertif->size_nama.'px' : '32px';
         // dd($get_sertif->rata_huruf);
         //Partisipan
-        $sertif_2 = $get_sertif_page_2->file ?? null;;
+        $sertif_2 = $get_sertif_page_2->file;
         $atas_2 = $get_sertif->peserta_top.'mm';
         $kanan_2 = $get_sertif->peserta_right.'mm';
         $kiri_2 = $get_sertif->peserta_left.'mm';
