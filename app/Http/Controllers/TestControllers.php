@@ -51,45 +51,79 @@ class TestControllers extends Controller
 
     public function downloadSertif(Request $request)
     {
-        $data = DB::table("pesertas")->where('id',$request->peserta_id)->first();
+        // Ambil data peserta
+        $data = DB::table("pesertas")->where('id', $request->peserta_id)->first();
+        if (!$data) {
+            return response()->json(['error' => 'Data tidak ditemukan'], 404);
+        }
+
         $peserta = $data->name;
         $partisipan = $data->partisipan;
-        $get_sertif = $data = DB::table("sertifs")->where('id',$data->sertif_id)->first();
-        $cek_page_2 = $sertif = $get_sertif->id+1;
-        $get_sertif_page_2 = $data = DB::table("sertifs")->where('id',$cek_page_2)->first();
-        
-        // view('page',$get_sertif)
-        //Nama
-        $sertif = $get_sertif->file;
-        $atas = $get_sertif->margin_top.'mm';
-        $kanan = $get_sertif->margin_right.'mm';
-        $kiri = $get_sertif->margin_left.'mm';
-        $rataHuruf = !empty($get_sertif->rata_huruf) ? $get_sertif->rata_huruf : 'center';
-        $sizeNama = !empty($get_sertif->size_nama) ? $get_sertif->size_nama.'px' : '32px';
-        // dd($get_sertif->rata_huruf);
-        //Partisipan
-        $sertif_2 = $get_sertif_page_2->file;
-        $atas_2 = $get_sertif->peserta_top.'mm';
-        $kanan_2 = $get_sertif->peserta_right.'mm';
-        $kiri_2 = $get_sertif->peserta_left.'mm';
-        $sizePeserta = !empty($get_sertif->size_peserta) ? $get_sertif->size_peserta.'px' : '22px';
+        $get_sertif = DB::table("sertifs")->where('id', $data->sertif_id)->first();
+        $cek_page_2 = $get_sertif->id + 1;
+        $get_sertif_page_2 = DB::table("sertifs")->where('id', $cek_page_2)->first();
 
-        $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => [297, 210]]);
-        $data = "<div style='color:#323330;font-size:$sizeNama;text-align:$rataHuruf;padding-top: $atas;margin-left: $kiri;margin-right: $kanan;'> $peserta </div>
-                <div style='color:#323330;font-size:$sizePeserta;text-align:$rataHuruf;padding-top: $atas_2;margin-left: $kiri_2;margin-right: $kanan_2;'> $partisipan </div>";
-        $mpdf->WriteHtml('<div style="position: absolute; left:0; right: 0; top: 0; bottom: 0;">
-                        <img src="'.public_path().'/'.'uploads/'.$sertif.'" 
-                            style="margin: 0;" />
-                    </div>');
-        $mpdf->WriteHtml($data);
-        if(!empty($get_sertif_page_2) && $get_sertif_page_2->page_two == 1){
+        // Konfigurasi mPDF
+        $mpdf = new Mpdf([
+            'mode' => 'utf-8',
+            'format' => [297, 210],
+            'margin_top' => 0,
+            'margin_left' => 0,
+            'margin_right' => 0
+        ]);
+
+        // Siapkan gaya teks
+        $rataHuruf = !empty($get_sertif->rata_huruf) ? $get_sertif->rata_huruf : 'center';
+        $sizeNama = !empty($get_sertif->size_nama) ? $get_sertif->size_nama . 'px' : '32px';
+        $sizePeserta = !empty($get_sertif->size_peserta) ? $get_sertif->size_peserta . 'px' : '22px';
+
+        // Buat konten HTML
+        $htmlContent = sprintf(
+            '
+        <div style="position: absolute; left:0; right: 0; top: 0; bottom: 0;">
+            <img src="%s" style="width: 100%%; margin: 0;" />
+        </div>
+        <div style="color:#323330; font-size:%s; text-align:%s; position: absolute; top:%smm; left:%smm; right:%smm;">
+            %s
+        </div>
+        <div style="color:#323330; font-size:%s; text-align:%s; position: absolute; top:%smm; left:%smm; right:%smm;">
+            %s
+        </div>',
+            public_path('/uploads/' . $get_sertif->file),
+            $sizeNama,
+            $rataHuruf,
+            $get_sertif->margin_top,
+            $get_sertif->margin_left,
+            $get_sertif->margin_right,
+            $peserta,
+            $sizePeserta,
+            $rataHuruf,
+            $get_sertif->peserta_top,
+            $get_sertif->peserta_left,
+            $get_sertif->peserta_right,
+            $partisipan
+        );
+
+        $mpdf->WriteHTML($htmlContent);
+
+        // Tambahkan halaman kedua jika ada
+        if (!empty($get_sertif_page_2) && $get_sertif_page_2->page_two == 1) {
             $mpdf->AddPage();
-            $mpdf->WriteHtml('<div style="position: absolute; left:0; right: 0; top: 0; bottom: 0;">
-                        <img src="'.public_path().'/'.'uploads/'.$sertif_2.'" 
-                            style="margin: 0;" />
-                    </div>');
+            $mpdf->WriteHTML(sprintf(
+                '
+            <div style="position: absolute; left:0; right: 0; top: 0; bottom: 0;">
+                <img src="%s" style="width: 100%%; margin: 0;" />
+            </div>',
+                public_path('/uploads/' . $get_sertif_page_2->file)
+            ));
         }
-        $mpdf->Output($peserta.'.pdf','I');
+
+        // Buat nama file yang aman untuk sistem file
+        $filename = str_replace([' ', '/', '\\', ':', '*', '?', '"', '<', '>', '|'], '_', $peserta);
+        $filename = preg_replace('/[^A-Za-z0-9\_\-]/', '', $filename); // Hapus karakter khusus
+        $filename = strtolower($filename) . '_sertifikat.pdf';
+        
+        return $mpdf->Output($peserta . '.pdf', 'I');
     }
 
     public function index(Request $request)
