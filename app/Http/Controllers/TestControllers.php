@@ -122,7 +122,7 @@ class TestControllers extends Controller
 
 
         $request->validate([
-            'excel_file' => 'required|mimes:xlsx,xls,csv|max:5120',
+            'excel_file' => 'mimes:xlsx,xls,csv|max:5120',
         ]);
 
         try {
