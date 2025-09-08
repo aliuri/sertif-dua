@@ -22,8 +22,8 @@ class PesertasImport implements ToModel, WithHeadingRow
 
         return new Pesertas([
             'name' => $row['name'] ?? $row['nama'] ?? null,
-            'email' => $row['email'] ?? null,
-            'partisipan' => $row['partisipan'] ?? $row['sebagai'] ?? null,
+            'email' => $row['email'] ?? $row['e-mail'] ?? null,
+            'partisipan' => $row['partisipan'] ?? $row['sebagai'] ?? $row['keterangan'] ?? null,
             'sertif_id' => $this->sertif_id // Use the sertif_id from constructor
         ]);
     }
