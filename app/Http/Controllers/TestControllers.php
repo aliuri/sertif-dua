@@ -181,20 +181,25 @@ class TestControllers extends Controller
 
     public function destroy($id)
     {
-        $Sertif = sertifs::find($id);
-        if ($Sertif != null) {
-        $file_path = public_path().'/'.'uploads/'.$Sertif->file;
-        unlink($file_path);
-        $Sertif->delete();
+        // Get the sertif record first
+        $sertif = sertifs::find($id);
 
-        // flash("Pengguna berhasil di hapus.")->success();
-        return Redirect::back();
+        if ($sertif != null) {
+            // Delete the file from uploads directory
+            $file_path = public_path() . '/' . 'uploads/' . $sertif->file;
+            if (file_exists($file_path)) {
+                unlink($file_path);
+            }
+
+            // Delete all related peserta records
+            Pesertas::where('sertif_id', $id)->delete();
+
+            // Delete the sertif record
+            $sertif->delete();
+
+            return redirect()->back()->with('success', 'Sertifikat berhasil dihapus');
+        }
+
+        return redirect()->back()->with('error', 'Sertifikat gagal dihapus');
     }
-
-        // flash("Pengguna gagal di hapus.")->success();
-        return Redirect::back();
-
-        
-    }
-
 }
