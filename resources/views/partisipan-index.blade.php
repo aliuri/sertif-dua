@@ -69,12 +69,14 @@
             });
 
             var table = $('#peserta').DataTable({
-                processing: true,
-                serverSide: true,
                 ajax: {
                     url: "{{ route('data.peserta.get') }}",
                     type: "GET",
-                    dataType: 'json',
+                    data: function(d) {
+                        // Kirim parameter tambahan untuk pagination
+                        d.page = (d.start / d.length) + 1; // Hitung halaman
+                        d.per_page = d.length; // Jumlah entries per halaman
+                    },
                     error: function(xhr, status, error) {
                         console.error('Error:', error);
                         alert('Terjadi kesalahan saat memuat data.');
@@ -103,14 +105,24 @@
                         `;
                     }},
                 ],
-                "pageLength": 10,
-                "pagingType": "full_numbers",  // Pagination dengan full numbers
-                "language": {
-                    "paginate": {
-                        "next": "Next",
-                        "previous": "Previous"
+                processing: true,
+                serverSide: true,
+                pageLength: 10, // Default page length
+                lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]], // Opsi show entries
+                pagingType: "full_numbers",
+                language: {
+                    paginate: {
+                        first: "Ngarep",
+                        last: "Buri",
+                        next: "Maju",
+                        previous: "Mundur"
                     },
-                    "emptyTable": "No data available",
+                    lengthMenu: "Tampilkan _MENU_ data per halaman",
+                    emptyTable: "Data ne kosong boss",
+                    info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
+                    search: "Pencarian:",
+                    zeroRecords: "Data ne ra cocok boss",
                 }
             });
 
