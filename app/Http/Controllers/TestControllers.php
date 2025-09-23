@@ -237,4 +237,68 @@ class TestControllers extends Controller
 
         return redirect()->back()->with('error', 'Sertifikat gagal dihapus');
     }
+
+    public function partisipanGet(Request $request)
+    {
+        if ($request->ajax()) {
+            // Ambil data peserta dengan relasi sertif dan urutkan berdasarkan id
+            $data = Pesertas::with('sertif') // Memuat relasi sertif
+                ->orderBy('id', 'desc');
+
+            // Menggunakan pencarian (searching)
+            if ($request->has('search') && $request->search['value'] != '') {
+                $searchTerm = $request->search['value'];
+                $data->where(function ($query) use ($searchTerm) {
+                    $query->where('name', 'like', "%$searchTerm%")
+                        ->orWhere('email', 'like', "%$searchTerm%"); // Mencari di kolom 'name' dan 'email'
+                });
+            }
+            
+            $perPage = 10; // Misal 10 data per halaman
+            $paginatedData = $data->paginate($perPage); // Pagination di sini
+
+            // Menambahkan index pada data setelah dipaginasi
+            $paginatedData->getCollection()->transform(function ($item, $key) use ($paginatedData, $perPage) {
+                $item->DT_RowIndex = $key + 1 + ($paginatedData->currentPage() - 1) * $perPage;
+                return $item;
+            });
+
+            // Mengembalikan format yang dibutuhkan oleh DataTables
+            return response()->json([
+                'draw' => $request->get('draw'),
+                'recordsTotal' => Pesertas::count(),  // Jumlah total data tanpa filter
+                'recordsFiltered' => $paginatedData->total(),  // Jumlah data setelah filter
+                'data' => $paginatedData->items(),  // Data yang dipaginasi
+            ]);
+        }
+    }
+
+
+    public function partisipanView()
+    {
+        return view('partisipan-index');
+    }
+
+    // Menghapus peserta berdasarkan id
+    public function deletePeserta($id)
+    {
+        $peserta = Pesertas::find($id);
+        if ($peserta) {
+            $peserta->delete();
+            return response()->json(['success' => 'Peserta deleted successfully']);
+        } else {
+            return response()->json(['error' => 'Peserta not found'], 404);
+        }
+    }
+
+    // Bulk delete peserta berdasarkan array of IDs
+    public function bulkDeletePeserta(Request $request)
+    {
+        $ids = $request->input('ids');
+        if (!empty($ids)) {
+            Pesertas::whereIn('id', $ids)->delete();
+            return response()->json(['success' => 'Selected peserta deleted successfully']);
+        }
+        return response()->json(['error' => 'No peserta selected'], 400);
+    }
 }

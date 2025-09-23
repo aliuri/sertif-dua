@@ -8,4 +8,9 @@ class sertifs extends Model
 {
     protected $fillable = [
         'file','margin_top','margin_left','margin_right','peserta_top','peserta_left','peserta_right','page_two','rata_huruf','size_nama','size_peserta'];
+
+    public function pesertas()
+    {
+        return $this->hasMany('App\Pesertas', 'sertif_id');
+    }
 }

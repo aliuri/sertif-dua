@@ -25,20 +25,37 @@
         <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js"></script> 
     </head>
     <body>
-        <div class="table-responsive">
-            <a class="btn btn-primary" href="javascript:void(0)" id="tambah">Tambah</a><br><br>
-        <table id="sertif" class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>ID</th>
-                    <th>File</th>
-                    <th>Page 2</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-        </table>
-    </div>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{url('/')}}">Cieee Admin kerjaa :D</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="btn btn-primary navbar-brand" href="javascript:void(0)" id="tambah">Tambah sertif</a>
+                <a class="btn btn-info" href="{{route('data.peserta.view')}}">Data semua peserta</a>
+            </div>
+            </div>
+        </div>
+        </nav>
+        <div class="card mx-auto p-2" style="width: 98%; margin-top: 20px;">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="sertif" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>ID</th>
+                                <th>File</th>
+                                <th>Page 2</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
 </div>
     </body>
 @include('sertif-form')
