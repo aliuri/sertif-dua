@@ -84,7 +84,7 @@
                             my_form=document.createElement('FORM');
                             my_form.name='myForm';
                             my_form.method='POST';
-                            my_form.action='{{route('download',['download'=>'pdf'])}}';
+                            my_form.action="/" + data[i].name;
                             
                             var csrftoken=document.createElement("input");
                             csrftoken.setAttribute("type","hidden");

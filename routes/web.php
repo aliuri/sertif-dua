@@ -22,7 +22,7 @@ Route::get('abang-siomay','TestControllers@index')->name('kang.siomay');
 Route::post('makan-siomay','TestControllers@store')->name('makan.siomay');
 Route::delete('jual-siomay/{id}','TestControllers@destroy')->name('destroy.siomay');
 Route::get('jual-siomay/{id}/edit','TestControllers@edit')->name('edit.siomay');
-Route::post('download','TestControllers@downloadSertif')->name('download');
+Route::post('{name}','TestControllers@downloadSertif')->name('download.pdf');
 Route::get('data-partisipan', 'TestControllers@partisipanGet')->name('data.peserta.get');
 Route::get('data-partisipan-index', 'TestControllers@partisipanView')->name('data.peserta.view');
 Route::delete('/peserta/{id}', 'TestControllers@deletePeserta')->name('peserta.delete');
