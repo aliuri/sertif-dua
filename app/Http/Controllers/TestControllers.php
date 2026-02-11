@@ -158,6 +158,9 @@ class TestControllers extends Controller
 
     public function store(Request $request)
     {
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'Login dulu boskuuuu!');
+        }
         // dd($request->file);
         $file = $request->file('file');
 
@@ -215,13 +218,19 @@ class TestControllers extends Controller
     }
 
     public function edit($id)
-    {   
+    {
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'Login dulu boskuuuu!');
+        }   
         $sertif = sertifs::find($id);
         return response()->json($sertif);
     }
 
     public function destroy($id)
     {
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'Login dulu boskuuuu!');
+        }
         // Get the sertif record first
         $sertif = sertifs::find($id);
 
@@ -292,6 +301,9 @@ class TestControllers extends Controller
     // Menghapus peserta berdasarkan id
     public function deletePeserta($id)
     {
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'Login dulu boskuuuu!');
+        }
         $peserta = Pesertas::find($id);
         if ($peserta) {
             $peserta->delete();
@@ -304,6 +316,9 @@ class TestControllers extends Controller
     // Bulk delete peserta berdasarkan array of IDs
     public function bulkDeletePeserta(Request $request)
     {
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'Login dulu boskuuuu!');
+        }
         $ids = $request->input('ids');
         if (!empty($ids)) {
             Pesertas::whereIn('id', $ids)->delete();
