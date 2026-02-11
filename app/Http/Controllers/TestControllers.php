@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\Authenticate;
 use Illuminate\Http\Request;
-use DB;
 use PDF;
-use DataTables;
 use App\sertifs;
 use App\Pesertas;
 use Redirect;
 use Mpdf\Mpdf;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\PesertasImport;
+use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\DataTables;
 
 class TestControllers extends Controller
 {
@@ -51,6 +52,7 @@ class TestControllers extends Controller
 
     public function downloadSertif(Request $request)
     {
+
         // Ambil data peserta
         $data = DB::table("pesertas")->where('id', $request->peserta_id)->first();
         if (!$data) {
@@ -128,7 +130,11 @@ class TestControllers extends Controller
     }
 
     public function index(Request $request)
-    {   
+    {
+        // Require authentication
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'Login dulu boskuuuu!');
+        }
         if ($request->ajax()) {
             $data = DB::table("sertifs")->orderBy('id', 'desc')->get();
                 // dd($data);
@@ -277,6 +283,9 @@ class TestControllers extends Controller
 
     public function partisipanView()
     {
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'Login dulu boskuuuu!');
+        }
         return view('partisipan-index');
     }
 
