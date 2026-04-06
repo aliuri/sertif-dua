@@ -26,6 +26,7 @@
                                 <th>ID</th>
                                 <th>Nama</th>
                                 <th>Email</th>
+                                <th>Partisipan</th>
                                 <th>Parent Sertif</th>
                                 <th>Action</th>  <!-- Action column for delete button -->
                             </tr>
@@ -77,6 +78,9 @@
                         return data ? data : 'kosong';
                     }},
                     {data: 'email', name: 'email', render: function(data) {
+                        return data ? data : 'kosong';
+                    }},
+                    {data: 'partisipan', name: 'partisipan', render: function(data) {
                         return data ? data : 'kosong';
                     }},
                     {data: 'sertif.file', name: 'sertif.file', render: function(data) {  

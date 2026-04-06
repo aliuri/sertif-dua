@@ -21,6 +21,11 @@
           </div>
 
           <div class="mb-3">
+            <label for="partisipan" class="form-label">Partisipan</label>
+            <input class="form-control form-control-sm" id="partisipan" name="partisipan" type="partisipan" required>
+          </div>
+
+          <div class="mb-3">
             <label for="sertif_id" class="form-label">Parent Sertif</label>
             <select class="form-control form-control-sm searchable-select" id="sertif_id" name="sertif_id" style="width: 100%;">
               <option value="">-- Pilih Sertif --</option>
