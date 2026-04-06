@@ -27,7 +27,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-4">
                     <h3 class="mb-32 max-w-1000-px">Serpo 2.0</h3>
-                    <p class="text-neutral-500 max-w-700-px text-lg">Sertifikat Poltekkes Kemenkes Yogyakarta, sistem yang mampu mengelola dan menggenerate sertifikat secara digital. Silahkan email ke serpo@poltekkesjogja.ac.id</p>
+                    <p class="text-neutral-500 max-w-700-px text-lg">Sertifikat Poltekkes Kemenkes Yogyakarta, sistem yang mampu mengelola dan menggenerate sertifikat secara digital.</p>
                     <div class="mt-56 max-w-500-px text-start">
                         <span class="fw-semibold text-neutral-600 text-lg text-hover-neutral-600"> Masukkan Email Anda untuk mencari sertifikat!</span>
                         <form id="form" name="form" class="form-horizontal mt-16 d-flex gap-16 flex-sm-row flex-column">
@@ -80,7 +80,7 @@
                     </div>
                     <div id="no-results" class="text-center">
                         {{-- <img src="{{ asset('wowdash/assets/images/maintenance.png') }}" alt="No Results" style="max-width: 300px;"> --}}
-                        <p class="mt-3">Masukkan email Anda untuk mencari sertifikat.</p>
+                        {{-- <p class="mt-3">Masukkan email Anda untuk mencari sertifikat.</p> --}}
                     </div>
                 </div>
             </div>
