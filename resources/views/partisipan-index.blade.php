@@ -6,11 +6,6 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                        <a class="btn btn-info" href="{{url('/abang-siomay')}}">Sertifikat</a>
-                    </div>
-                </div>
             </div>
         </nav>
         <div class="card mx-auto p-2" style="width: 98%; margin-top: 20px;">
@@ -18,6 +13,7 @@
                 <!-- Bulk Delete Button -->
                 <div class="d-flex justify-content-between mb-3">
                     <button id="add" class="btn btn-primary">Tambah Partisipan</button>
+                    <a class="btn btn-info mx-auto" href="{{url('/abang-siomay')}}">Sertifikat</a>
                     <button id="bulk-delete" class="btn btn-danger">Hapus yang di checklist</button>
                 </div>
 

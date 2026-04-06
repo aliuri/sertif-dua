@@ -6,17 +6,13 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="btn btn-info" href="{{route('data.peserta.view')}}">Data semua peserta</a>
-            </div>
-            </div>
         </div>
         </nav>
         <div class="card mx-auto p-2" style="width: 98%; margin-top: 20px;">
             <div class="card-body">
                 <div class="d-flex mb-3">
-                    <a class="btn btn-primary navbar-brand" href="javascript:void(0)" id="tambah">Tambah sertif</a>
+                    <a class="btn btn-primary" href="javascript:void(0)" id="tambah">Tambah sertif</a>
+                    <a class="btn btn-info mx-auto" href="{{route('data.peserta.view')}}">Data semua peserta</a>
                 </div>
                 <div class="table-responsive">
                     <table id="sertif" class="table table-striped table-bordered">
