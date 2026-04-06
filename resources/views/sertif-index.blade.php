@@ -16,7 +16,7 @@
         <div class="card mx-auto p-2" style="width: 98%; margin-top: 20px;">
             <div class="card-body">
                 <div class="d-flex mb-3">
-                    <a class="btn btn-primary navbar-brand ms-auto" href="javascript:void(0)" id="tambah">Tambah sertif</a>
+                    <a class="btn btn-primary navbar-brand" href="javascript:void(0)" id="tambah">Tambah sertif</a>
                 </div>
                 <div class="table-responsive">
                     <table id="sertif" class="table table-striped table-bordered">

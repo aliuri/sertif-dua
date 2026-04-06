@@ -17,8 +17,8 @@
             <div class="card-body">
                 <!-- Bulk Delete Button -->
                 <div class="d-flex justify-content-between mb-3">
-                    <button id="bulk-delete" class="btn btn-danger">Hapus yang di checklist</button>
                     <button id="add" class="btn btn-primary">Tambah Partisipan</button>
+                    <button id="bulk-delete" class="btn btn-danger">Hapus yang di checklist</button>
                 </div>
 
                 <div class="table-responsive">
