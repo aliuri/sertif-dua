@@ -8,7 +8,6 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="btn btn-primary navbar-brand" href="javascript:void(0)" id="tambah">Tambah sertif</a>
                 <a class="btn btn-info" href="{{route('data.peserta.view')}}">Data semua peserta</a>
             </div>
             </div>
@@ -16,6 +15,9 @@
         </nav>
         <div class="card mx-auto p-2" style="width: 98%; margin-top: 20px;">
             <div class="card-body">
+                <div class="d-flex mb-3">
+                    <a class="btn btn-primary navbar-brand ms-auto" href="javascript:void(0)" id="tambah">Tambah sertif</a>
+                </div>
                 <div class="table-responsive">
                     <table id="sertif" class="table table-striped table-bordered">
                         <thead>
@@ -42,9 +44,9 @@
 $(document).ready(function () {
     // Gunakan setTimeout untuk memastikan semua library sudah fully loaded
     setTimeout(function() {
-        console.log('Document ready, initializing DataTables...');
-        console.log('jQuery version:', $.fn.jquery);
-        console.log('DataTables available?', typeof $.fn.DataTable);
+        // console.log('Document ready, initializing DataTables...');
+        // console.log('jQuery version:', $.fn.jquery);
+        // console.log('DataTables available?', typeof $.fn.DataTable);
 
         $.ajaxSetup({
             headers: {
@@ -103,13 +105,20 @@ $(document).ready(function () {
             $('#file_edit').val(data.file);
 
             if ((data.page_two !== 0) && (data.page_two !== null)) {
-                console.log(data.page_two);
-                console.log("checked");
+                // console.log(data.page_two);
+                // console.log("checked");
                 $(".page_2").prop("checked", true);
             } else {
                 $(".page_2").prop("checked", false);
             }
-
+            if ((data.rata_huruf !== 0) && (data.rata_huruf !== null)) {
+                // console.log(data.rata_huruf);
+                // console.log("checked");
+                $(".rata_huruf").prop("checked", true);
+            } else {
+                $(".rata_huruf").prop("checked", false);
+            }
+            // console.log(data);
             document.getElementById('file_upload').style.display = 'none';
             document.getElementById('excel_upload').style.display = 'none';
         });

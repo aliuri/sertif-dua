@@ -28,6 +28,8 @@ Route::get('data-partisipan', 'TestControllers@partisipanGet')->name('data.peser
 Route::get('data-partisipan-index', 'TestControllers@partisipanView')->name('data.peserta.view');
 Route::delete('/peserta/{id}', 'TestControllers@deletePeserta')->name('peserta.delete');
 Route::post('/peserta/bulk-delete', 'TestControllers@bulkDeletePeserta')->name('peserta.bulkDelete');
+Route::get('/sertif/all', 'TestControllers@getAllSertif')->name('sertif.all');
+Route::post('/peserta/store', 'TestControllers@storePeserta')->name('peserta.store');
 
 // Return 404 for /login
 Route::get('/login', function() {

@@ -326,4 +326,40 @@ class TestControllers extends Controller
         }
         return response()->json(['error' => 'No peserta selected'], 400);
     }
+
+    // Get all sertif for dropdown
+    public function getAllSertif()
+    {
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'Login dulu boskuuuu!');
+        }
+        $sertifs = sertifs::select('id', 'file')->get();
+        return response()->json($sertifs);
+    }
+
+    // Store new peserta
+    public function storePeserta(Request $request)
+    {
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'Login dulu boskuuuu!');
+        }
+
+        try {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:pesertas,email',
+                'sertif_id' => 'required|exists:sertifs,id',
+            ]);
+
+            $peserta = Pesertas::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'sertif_id' => $request->sertif_id,
+            ]);
+
+            return response()->json(['success' => 'Peserta berhasil ditambahkan', 'data' => $peserta]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
+    }
 }

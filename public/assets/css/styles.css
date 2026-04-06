@@ -10835,11 +10835,11 @@ textarea.form-control-lg {
   }
 }
 html {
-  height: 100%;
+  height: auto;
 }
 
 body {
-  height: 100%;
+  height: auto;
   position: relative;
 }
 body:before {
@@ -10878,7 +10878,7 @@ video.bg-video {
 }
 .masthead {
   position: relative;
-  overflow: hidden;
+  overflow: auto;
   z-index: 2;
   display: flex;
   align-items: center;

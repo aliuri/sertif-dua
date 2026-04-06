@@ -31,7 +31,7 @@
           </div>
           <div class="mb-3">
             <div class="form-check form-switch">
-              <input class="form-check-input rata_kiri" type="checkbox" name="rata_huruf" value="left" id="rata_huruf">
+              <input class="form-check-input rata_huruf" type="checkbox" name="rata_huruf" value="left" id="rata_huruf">
               <label class="form-check-label " id="rata_huruf" for="flexSwitchCheckDefault">Rata kiri</label>
             </div>
           </div>

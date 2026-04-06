@@ -16,7 +16,10 @@
         <div class="card mx-auto p-2" style="width: 98%; margin-top: 20px;">
             <div class="card-body">
                 <!-- Bulk Delete Button -->
-                <button id="bulk-delete" class="btn btn-danger mb-3">Hapus yang di checklist</button>
+                <div class="d-flex justify-content-between mb-3">
+                    <button id="bulk-delete" class="btn btn-danger">Hapus yang di checklist</button>
+                    <button id="add" class="btn btn-primary">Tambah Partisipan</button>
+                </div>
 
                 <div class="table-responsive">
                     <table id="peserta" class="table table-striped table-bordered">
@@ -36,11 +39,14 @@
                 </div>
             </div>
         </div>
+@include('partisipan-form')
 @endsection
 @push('script')
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
         <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>  
     <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
         <script>
         $(function () {
             $.ajaxSetup({
@@ -159,6 +165,75 @@
             $('#select-all').change(function() {
                 var isChecked = $(this).prop('checked');
                 $('.row-check').prop('checked', isChecked);
+            });
+
+            // Load sertif options for dropdown
+            function loadSertifOptions() {
+                $.ajax({
+                    url: "{{ route('sertif.all') }}",
+                    type: "GET",
+                    dataType: 'json',
+                    success: function(data) {
+                        var options = '<option value="">-- Pilih Sertif --</option>';
+                        $.each(data, function(key, value) {
+                            options += '<option value="' + value.id + '">' + value.file + '</option>';
+                        });
+                        $('#sertif_id').html(options);
+                        // Reinitialize Select2 after loading options
+                        $('#sertif_id').select2({
+                            placeholder: 'Cari dan pilih sertif...',
+                            allowClear: true,
+                            dropdownParent: $('#ajaxModel')
+                        });
+                    }
+                });
+            }
+
+            // Load sertif options on page load
+            loadSertifOptions();
+
+            // Add button click handler
+            $('#add').click(function() {
+                $('#saveBtn').val("create-peserta");
+                $('#peserta_id').val('');
+                $('#FormPartisipan').trigger("reset");
+                $('#modelHeading').html("Tambah Partisipan");
+                $('#ajaxModel').modal('show');
+                // Reinitialize Select2 when modal is shown
+                setTimeout(function() {
+                    $('#sertif_id').select2({
+                        placeholder: 'Cari dan pilih sertif...',
+                        allowClear: true,
+                        dropdownParent: $('#ajaxModel')
+                    });
+                }, 100);
+            });
+
+            // Form submission
+            $('#saveBtn').click(function(e) {
+                e.preventDefault();
+                $(this).html('Menyimpan..');
+                let data = new FormData($("#FormPartisipan")[0]);
+
+                $.ajax({
+                    data: data,
+                    url: "{{ route('peserta.store') }}",
+                    type: "POST",
+                    dataType: 'json',
+                    processData: false,
+                    contentType: false,
+                    success: function(data) {
+                        $('#ajaxModel').modal('hide');
+                        $('#FormPartisipan').trigger("reset");
+                        table.ajax.reload();
+                        alert('Partisipan berhasil ditambahkan');
+                    },
+                    error: function(data) {
+                        console.log('Error:', data);
+                        alert('Terjadi kesalahan saat menyimpan');
+                        $('#saveBtn').html('Simpan');
+                    }
+                });
             });
         });
         </script>
