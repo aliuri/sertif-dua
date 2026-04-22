@@ -35,7 +35,7 @@ class TestControllers extends Controller
     {
         $data = Pesertas::select('pesertas.id as peserta_id','pesertas.name','pesertas.email','sertifs.id as sertif_id','sertifs.file')->join('sertifs','sertifs.id','=','pesertas.sertif_id')->where('pesertas.email',$request->email)->orderBy('sertifs.id', 'desc')->get();
         // dd($data);
-        if(!empty($data)){
+        if($data->isNotEmpty()){
 
             return response()->json($data);
             // return response()->json([

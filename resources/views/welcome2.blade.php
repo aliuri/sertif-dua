@@ -43,8 +43,8 @@
                     </div>
                 </div>
 
-                <div class="col-lg-8 d-lg-block d-none">
-                    <div class="table-responsive">
+                <div class="col-lg-8" id="search-result-area" style="display: none;">
+                    <div class="table-responsive"> 
                         
                     <div class="result-box" id="result-box" style="display: none;">
                         <h4 class="text-center mb-4">Hasil Pencarian Sertifikat</h4>
@@ -103,6 +103,15 @@ $(function () {
 
     $('#submit-button').click(function (e) {
         e.preventDefault();
+
+        const emailInput = $('input[name="email"]');
+        const emailValue = emailInput.val().trim();
+
+        if (emailValue === '') {
+            $('#notification').html('<i class="ri-error-warning-line"></i> Email tidak boleh kosong atau hanya berisi spasi.').show();
+            return; // Menghentikan eksekusi fungsi jika input tidak valid
+        }
+
         // Hide notification when starting new search
         $('#notification').hide();
         $(this).html('<i class="ri-loader-4-line"></i> Mencari...').prop('disabled', true);
@@ -120,6 +129,7 @@ $(function () {
                 $('#submit-button').html('<i class="ri-search-line"></i> Cari').prop('disabled', false);
 
                 if (data && data.length > 0) {
+                    $('#search-result-area').show();
                     $('#result-box').show();
                     $('#no-results').hide();
                     $('#notification').hide(); // Hide notification if results found
@@ -146,6 +156,7 @@ $(function () {
 
                     $('#search-results').html(resultsHtml);
                 } else {
+                    $('#search-result-area').hide();
                     $('#result-box').hide();
                     $('#no-results').show();
                     $('#search-results').html('');
@@ -156,6 +167,7 @@ $(function () {
                 $('#submit-button').html('<i class="ri-search-line"></i> Cari').prop('disabled', false);
                 console.log('Error:', data);
                 alert('Terjadi kesalahan saat mencari. Silakan coba lagi.');
+                $('#search-result-area').hide();
                 $('#result-box').hide();
                 $('#no-results').show();
                 $('#search-results').html('');
