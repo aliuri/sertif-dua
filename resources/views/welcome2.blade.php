@@ -108,7 +108,7 @@ $(function () {
         const emailValue = emailInput.val().trim();
 
         if (emailValue === '') {
-            $('#notification').html('<i class="ri-error-warning-line"></i> Email tidak boleh kosong atau hanya berisi spasi.').show();
+            $('#notification').html('<i class="ri-error-warning-line"></i> Pastikan email sudah benar !').show();
             return; // Menghentikan eksekusi fungsi jika input tidak valid
         }
 
