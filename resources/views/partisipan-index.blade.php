@@ -14,6 +14,7 @@
                 <div class="d-flex justify-content-between mb-3">
                     <button id="add" class="btn btn-primary">Tambah Partisipan</button>
                     <a class="btn btn-info mx-auto" href="{{url('/abang-siomay')}}">Sertifikat</a>
+                    <a class="btn btn-warning" href="{{ route('users.index') }}">User Management</a>
                     <button id="bulk-delete" class="btn btn-danger">Hapus yang di checklist</button>
                 </div>
 

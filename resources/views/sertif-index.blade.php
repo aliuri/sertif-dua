@@ -13,6 +13,7 @@
                 <div class="d-flex mb-3">
                     <a class="btn btn-primary" href="javascript:void(0)" id="tambah">Tambah sertif</a>
                     <a class="btn btn-info mx-auto" href="{{route('data.peserta.view')}}">Data semua peserta</a>
+                    <a class="btn btn-warning" href="{{ route('users.index') }}">Daftar User</a>
                 </div>
                 <div class="table-responsive">
                     <table id="sertif" class="table table-striped table-bordered">

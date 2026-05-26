@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Auth\KeycloakController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,6 +31,13 @@ Route::post('/peserta/bulk-delete', 'TestControllers@bulkDeletePeserta')->name('
 Route::get('/sertif/all', 'TestControllers@getAllSertif')->name('sertif.all');
 Route::post('/peserta/store', 'TestControllers@storePeserta')->name('peserta.store');
 
+// User Management Routes
+Route::get('users', 'UserController@index')->name('users.index');
+Route::get('users/data', 'UserController@getUsersData')->name('users.data');
+Route::post('users', 'UserController@store')->name('users.store');
+Route::get('users/{id}/edit', 'UserController@edit');
+Route::delete('users/{id}', 'UserController@destroy');
+
 // Return 404 for /login
 Route::get('/login', function() {
     abort(404);
@@ -46,3 +53,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // Wildcard download POST (moved after auth routes so it doesn't capture /register etc.)
 Route::post('{name}','TestControllers@downloadSertif')->name('download.pdf');
+
+Route::get('/auth/redirect', [KeycloakController::class, 'redirect'])->name('keycloak.login');
+Route::get('/auth/callback', [KeycloakController::class, 'callback']);
+Route::post('/auth/logout', [KeycloakController::class, 'logout'])->name('keycloak.logout');

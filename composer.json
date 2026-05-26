@@ -14,10 +14,12 @@
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "^7.0",
+        "laravel/socialite": "^5.27",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.4",
         "maatwebsite/excel": "^3.1",
         "mpdf/mpdf": "^8.0",
+        "socialiteproviders/keycloak": "^5.1",
         "yajra/laravel-datatables": "^1.5"
     },
     "require-dev": {
