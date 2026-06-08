@@ -346,10 +346,10 @@ class TestControllers extends Controller
 
         try {
             $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:pesertas,email',
-                'partisipan' => 'required|string|max:255',
-                'sertif_id' => 'required|exists:sertifs,id',
+                'name' => 'required|string',
+                'email' => 'required|email',
+                'partisipan' => 'required',
+                'sertif_id' => 'required',
             ]);
 
             $peserta = Pesertas::create([
