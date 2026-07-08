@@ -38,11 +38,11 @@ class KeycloakController extends Controller
             }
 
             // JIKA USER TIDAK DITEMUKAN: Tolak akses dan kembalikan ke halaman login
-            return redirect('/login')->with('error', "Akses ditolak: Email ({$email}) belum terdaftar di sistem kami. Silakan hubungi Administrator.");
+            return redirect('/')->with('error', "Akses ditolak: Email ({$email}) belum terdaftar di sistem kami. Silakan hubungi Administrator.");
         } catch (\Exception $e) {
             // Log error untuk memudahkan perbaikan jika terjadi masalah sistem
             \Illuminate\Support\Facades\Log::error('SSO Keycloak Error: ' . $e->getMessage());
-
+    
             return redirect('/login')->with('error', 'Gagal memproses login dari Keycloak.');
         }
     }
